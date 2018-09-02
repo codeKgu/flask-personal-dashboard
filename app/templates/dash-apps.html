@@ -1,0 +1,20 @@
+{% extends "base_site.html" %}
+
+{% block title %} Dash App {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+<!--{{ dash_html.css | safe}}-->
+{% endblock stylesheets %}
+
+{% block content %}
+{{dash_html| safe}}
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super() }}
+<!--{{dash_html.scripts | safe}}-->
+{% endblock javascripts %}
+
+
+
