@@ -4189,7 +4189,8 @@ ul.notifications {
 }
 
 
-
+.hidden {display:none;}
+.unhidden {display: block;}
 
 /* CSS3 Checkbox */
 /*

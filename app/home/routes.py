@@ -1,5 +1,5 @@
 from app.home import blueprint
-from app.home import weather
+from app.home import weather, email
 from flask import render_template
 from flask_login import login_required
 
@@ -14,8 +14,10 @@ def index():
     temp_max = weather_df['temp_max'].tolist()
     id = weather_df['id']
     curr_weather['weekday'] = weather.weekdate
+    emails = email.query_messages()
     return render_template('index.html', weekdays=weekdays, description=description, temp_min=temp_min,
-                        temp_max=temp_max, id=id, items=len(weekdays), curr_weather=curr_weather, forecast_weather=forecast_weather)
+                        temp_max=temp_max, id=id, items=len(weekdays), curr_weather=curr_weather,
+                           forecast_weather=forecast_weather, emails=emails)
 
 
 @blueprint.route('/<template>')
