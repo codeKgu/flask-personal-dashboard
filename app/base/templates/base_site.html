@@ -14,6 +14,8 @@
       <title>Gentelella Alela! | {% block title %}{% endblock %}</title>
 
       {% block stylesheets %}
+        <!-- Weather -->
+        <link href="{{ url_for('static', filename='vendors/weather-icons/css/weather-icons.min.css')}}" rel="stylesheet">
         <!-- Bootstrap -->
         <link href="{{ url_for('static', filename='vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Font Awesome -->
