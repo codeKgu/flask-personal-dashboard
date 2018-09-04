@@ -1,0 +1,26 @@
+{% extends "base_site.html" %}
+
+{% block title %} Google Calendar {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="position: relative; padding-bottom: 56%; padding-top: 35px; height: 0;
+            overflow: hidden;">
+            <iframe src="https://calendar.google.com/calendar/embed?src=ken.qgu%40gmail.com&ctz=America%2FVancouver" style="border: 30; width: 95%; height: 90%;
+                position: absolute;" frameborder="0" scrolling="yes"></iframe>
+        </div>
+      </div>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super() }}
+{% endblock javascripts %}
+
+
+
