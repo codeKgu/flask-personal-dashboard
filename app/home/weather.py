@@ -16,6 +16,9 @@ if 'WEATHER_API_KEY' in os.environ.keys():
 else:
     WEATHER_API_KEY = 'e1600e98c3db622543c7a808f5b01129'
 
+quote_resp = dict()
+quote_resp['quote'] = 'If I had an hour to solve a problem I\'d spend 55 minutes thinking about the problem and 5 minutes thinking about solutions.'
+quote_resp['author'] = 'Albert Einstein'
 
 cities = pd.read_json(DIR_PATH + '/resources/city.list.json')
 countries = pd.read_csv(DIR_PATH + '/resources/country-iso-codes.csv')
