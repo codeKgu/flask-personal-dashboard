@@ -192,9 +192,9 @@
                         </div>
                       </div>
                       <div class="view-mail">
-                        {% for message in email.msg_body %}
-                          {{ message | safe }}
-                        {% endfor %}
+
+                          {{ email.msg_body | safe  }}
+
                       </div>
                       <div class="attachment">
                         <p>

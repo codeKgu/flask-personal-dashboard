@@ -10,6 +10,8 @@ from time import time
 import os
 import pytz
 from dateutil.tz import tzlocal
+import html2text
+import markdown2
 
 now_timestamp = time()
 offset = dt.fromtimestamp(now_timestamp) - dt.utcfromtimestamp(now_timestamp)
@@ -34,6 +36,7 @@ def query_messages(filter_labels=[], query=''):
 
 
 def get_messages_from_ids(msgs, user_id, service):
+    h = html2text.HTML2Text()
     msg_list = []
     for msg in msgs:
         temp_dict = {}
@@ -47,6 +50,8 @@ def get_messages_from_ids(msgs, user_id, service):
                 split = header['value'].split()
                 if len(split) > 6:
                     msg_date = ' '.join(split[:6])
+                else:
+                    msg_date = header['value']
                 dtime = dt.strptime(msg_date, "%a, %d %b %Y %H:%M:%S %z")
                 local_dtime = dtime.astimezone(tzlocal())
                 if dt.utcnow().replace(tzinfo=pytz.utc) - dtime < timedelta(hours=24):
@@ -66,13 +71,17 @@ def get_messages_from_ids(msgs, user_id, service):
         temp_dict['snippet'] = message['snippet']
 
         try:
-            msg_parts = message['payload']['parts']
-            data = msg_parts[0]['body']['data']
+            msg_payload = message['payload']
+            if type(msg_payload) != type([]):
+                data = msg_payload['body']['data']
+            else:
+                data = msg_payload['parts'][1]['body']['data']
             clean_data_encoded = data.replace("-", "+").replace("_", "/")
             clean_data_decoded = b64decode(bytes(clean_data_encoded, 'UTF-8'))
             soup = BeautifulSoup(clean_data_decoded, 'html')
             msg_body = soup.body()
-            temp_dict['msg_body'] = msg_body
+            htmltext = markdown2.markdown(h.handle(str(soup)))
+            temp_dict['msg_body'] = str(htmltext)
         except Exception as e:
             print("ERROR {} when retrieving email".format(e))
 
