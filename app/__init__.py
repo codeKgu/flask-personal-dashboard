@@ -50,12 +50,10 @@ def create_app(selenium=False):
     app_spending_dash = app_spending.start_dash_spending(app)
 
     @app.route("/projects/spending")
-    @login_required
     def spending():
         return render_template("dash-apps.html", dash_html=app_spending_dash.index())
 
     @app.route("/projects/stock")
-    @login_required
     def stock():
         return render_template("dash-apps.html", dash_html=app_stock_dash.index())
 
