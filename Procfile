@@ -1,1 +1,1 @@
-web: gunicorn; gentelella:app
+web: gunicorn --config gunicorn.py gentelella:app
