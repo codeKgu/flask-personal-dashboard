@@ -59,7 +59,7 @@ def start_dash_spending(server):
                                     color=abs(location_info_df['Amount'].map(lambda x: int(100*x))),
                                     cmax=max(abs(location_info_df['Amount'].map(lambda x: int(100*x)))),
                                     colorbar=dict(
-                                        title="Spending"
+                                        title="Spending ¢"
                                     )
                                 )
                             )

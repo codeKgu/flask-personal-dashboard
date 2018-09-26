@@ -7,11 +7,10 @@ import json
 
 
 @blueprint.route('/index')
-@login_required
 def index():
     resp = json.loads(get('https://quotes.rest/qod?category=inspire').text)
     if 'contents'in resp.keys():
-        quote_resp = 'https://quotes.rest/qod?category=inspire' ['contents']['quotes'][0]
+        quote_resp = resp['contents']['quotes'][0]
     else:
         quote_resp = weather.quote_resp
     weather_df, forecast_weather, curr_weather = weather.get_weather_ucla()
