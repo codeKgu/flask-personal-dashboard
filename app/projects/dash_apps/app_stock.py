@@ -121,7 +121,8 @@ def start_dash_stock(server):
         else:
             class_choice = 'col s12'
 
-        beta_values = list(map(helpers.convert_to_float, [company_stats[stock]['Beta (3Y Monthly)'] for stock in input_tickers]))
+        beta_key = helpers.return_match_regex(r'^Beta.*', company_stats[input_tickers[0]])[0]
+        beta_values = list(map(helpers.convert_to_float, [company_stats[stock][beta_key] for stock in input_tickers]))
         for stock in input_tickers:
             if stock not in peers.keys():
                 peers[stock] = json.loads(requests.get(IEX_API_URL + '/stock/{}/peers'.format(stock)).text)
@@ -155,8 +156,7 @@ def start_dash_stock(server):
                         yaxis='y1')
                     )
 
-
-            peer_scatter_plot_markers = [(company['EPS (TTM)'], company['PE Ratio (TTM)'], company['Beta (3Y Monthly)'], key)
+            peer_scatter_plot_markers = [(company['EPS (TTM)'], company['PE Ratio (TTM)'], company[beta_key], key)
                                          for key, company in company_stats.items()
                                          if key in peers[stock]
                                          and 'EPS (TTM)' in company.keys()
@@ -220,12 +220,11 @@ def start_dash_stock(server):
                 yaxis='y2',
                 fill='tozeroy',
             )
-
             value1 = [str(x) for x in list(company_stats[stock].keys())]
             value2 = [str(x) for x in list(company_stats[stock].values())]
             trace_table = go.Table(
                 header=dict(
-                    values=[['Info'], ['Value']]
+                    values=[['<b>Info</b> <br>'], ['<b>Value</b>']]
                 ),
                 cells=dict(
                     values=[value1, value2]
@@ -269,7 +268,7 @@ def start_dash_stock(server):
                 )
             )
 
-            figure_price_graphs = dict(data=[trace_ohlc, trace_ma, trace_volume,trace_table], layout=layout) #trace table was here
+            figure_price_graphs = dict(data=[trace_ohlc, trace_ma, trace_volume, trace_table], layout=layout)
             output_graphs.append(html.Div(dcc.Graph(id=stock, figure=figure_price_graphs), className=class_choice,
                                           style={
                                               'margin-left': 'auto',

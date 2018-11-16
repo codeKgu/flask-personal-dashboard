@@ -5,6 +5,7 @@ import datetime as dt
 import json
 import os
 import pandas as pd
+import re
 from functools import reduce
 
 PROJECTS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,6 +77,14 @@ def call_async_data(symbols):
     done, _ = loop.run_until_complete(asyncio.wait(responses))
     return reduce(reduce_dict,[fut.result() for fut in done])
 
+def return_match_regex(string, dictionary):
+    res = []
+    print(string)
+    for key in dictionary.keys():
+        print(key)
+        if re.match(string, key):
+            res.append(key)
+    return res
 
 def convert_to_float(string):
     try:
