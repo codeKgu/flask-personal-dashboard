@@ -79,7 +79,7 @@ six==1.11.0
 sqlalchemy==1.2.7
 traitlets==4.3.2
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.26.5
 werkzeug==0.14.1
 wrapt==1.10.11
 wtforms==2.2.1
